@@ -38,6 +38,7 @@ public class AppFilter implements Filter {
 		String userid= (String) session.getAttribute("userid");
 		System.out.println("inside filter");
 		// pass the request along the filter chain
+		
 		if(userid !=null) {
 			chain.doFilter(request, response);	
 		}else {
