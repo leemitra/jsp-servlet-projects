@@ -17,16 +17,16 @@ import javax.servlet.http.HttpSession;
 import com.test.entity.UserDetails;
 
 /**
- * Servlet implementation class LoginServlet
+ * Servlet implementation class DeleteUserServlet
  */
-@WebServlet("/login")
-public class LoginServlet extends HttpServlet {
+@WebServlet("/deleteUser")
+public class DeleteUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public LoginServlet() {
+    public DeleteUserServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -36,39 +36,29 @@ public class LoginServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		//String username = request.getParameter("username");
-		//String password = request.getParameter("password");
-		System.out.println(request.getServletPath() + " servlet path and URI "+request.getRequestURI()); 
-		System.out.println("path info : "+request.getPathTranslated());
-		UserDetails user= (UserDetails)request.getAttribute("loginUser");
-		System.out.println("user name : "+user.getUsername() +"  and password : " +user.getPassword());
+		int id = Integer.parseInt(request.getParameter("userId"));
+		
 		try {
-	
+			
 			Connection con = DbConnection.getConnection();
 			Statement st = con.createStatement();
-			ResultSet rs= st.executeQuery("select *from user_login where user_name='"+user.getUsername()+"' and user_pass='"+user.getPassword()+"'");
-		
-			if(rs.next()) {
-				
+			int rs= st.executeUpdate("delete from user_login where id='"+id+"'");
+		if(rs>0) {
+			System.out.println("delete done "+rs);
+		}else {
+			System.out.println("delete failed");
+		}
 			 HttpSession session = request.getSession();
 			 UserService service = new UserService();
 			 List<UserDetails> list = service.getAllUsers();
-				String uid= rs.getString("user_name");
-				String pass=rs.getString("user_pass");
-			session.setAttribute("userid", uid);
-				System.out.println("DB username : "+uid +" and pass : "+pass) ;
+			 
 				session.setAttribute("list", list);
 				response.sendRedirect("home.jsp");
-			}else {
-				response.sendRedirect("index.jsp");
-			}
 				
 		} catch (SQLException e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		
-				
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 

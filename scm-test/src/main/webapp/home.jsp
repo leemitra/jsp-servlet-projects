@@ -22,12 +22,14 @@ if(userid == null){
 <p> <a href="logout"> logout</a></p>
 
 <table>
-<tr><td>Sl.No </td><td>Name</td><td>Email</td><td>Phone</td>  </tr>
+<tr><td>Sl.No </td><td>Name</td><td>Email</td><td>Phone</td> <td>Update/Delete</td>  </tr>
 <%
 List<UserDetails> users=(List<UserDetails>)session.getAttribute("list");
 for(UserDetails user : users){
 %>	
-<tr><td><%=user.getId() %> </td><td><%=user.getFullName() %> </td><td> <%=user.getEmail()%></td><td><%=user.getPhone() %></td></tr>
+<tr><td><%=user.getId() %> </td><td><%=user.getFullName() %> </td><td> <%=user.getEmail()%></td><td><%=user.getPhone() %></td>
+<td><a href="updateUser?userid=<%=user.getId()%>">Update</a> <a href="deleteUser?userId=<%=user.getId()%>">Delete</a> </td>
+</tr>
 
 <%	
 }
