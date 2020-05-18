@@ -18,7 +18,7 @@ import com.test.entity.UserDetails;
 /**
  * Servlet implementation class UpdateUserServlet
  */
-@WebServlet("/updateUser")
+//@WebServlet("/updateUser")
 public class UpdateUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -35,7 +35,7 @@ public class UpdateUserServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		int id = Integer.parseInt(request.getParameter("userid"));
+		/*int id = Integer.parseInt(request.getParameter("userid"));
 		System.out.println("request user to update "+id);
 		try {
 			
@@ -60,7 +60,7 @@ public class UpdateUserServlet extends HttpServlet {
 				e.printStackTrace();
 			}
 		request.getRequestDispatcher("update.jsp").forward(request, response);
-		
+		*/
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 

@@ -19,7 +19,7 @@ import com.test.entity.UserDetails;
 /**
  * Servlet implementation class DeleteUserServlet
  */
-@WebServlet("/deleteUser")
+//@WebServlet("/deleteUser")
 public class DeleteUserServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -36,29 +36,7 @@ public class DeleteUserServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		int id = Integer.parseInt(request.getParameter("userId"));
 		
-		try {
-			
-			Connection con = DbConnection.getConnection();
-			Statement st = con.createStatement();
-			int rs= st.executeUpdate("delete from user_login where id='"+id+"'");
-		if(rs>0) {
-			System.out.println("delete done "+rs);
-		}else {
-			System.out.println("delete failed");
-		}
-			 HttpSession session = request.getSession();
-			 UserService service = new UserService();
-			 List<UserDetails> list = service.getAllUsers();
-			 
-				session.setAttribute("list", list);
-				response.sendRedirect("home.jsp");
-				
-		} catch (SQLException e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 

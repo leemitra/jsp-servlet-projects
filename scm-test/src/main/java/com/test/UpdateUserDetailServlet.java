@@ -17,7 +17,7 @@ import com.test.entity.UserDetails;
 /**
  * Servlet implementation class updateUserDetailServlet
  */
-@WebServlet("/updateUserDetails")
+//@WebServlet("/updateUserDetails")
 public class UpdateUserDetailServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -35,7 +35,7 @@ public class UpdateUserDetailServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		UserDetails user=(UserDetails) request.getAttribute("userData");
+		/*UserDetails user=(UserDetails) request.getAttribute("userData");
 		System.out.println(user.getFullName() +" user full name and email : "+user.getEmail());
 		try {
 			Connection con = DbConnection.getConnection();
@@ -53,7 +53,7 @@ public class UpdateUserDetailServlet extends HttpServlet {
 		}catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
-		}
+		}*/
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
