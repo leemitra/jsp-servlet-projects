@@ -7,8 +7,11 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>home</title>
+<style type="text/css">
+<%@include file="../css/style.css" %>
 
-<link rel="stylesheet" type="text/css" href="css/style.css" />
+</style>
+
 </head>
 <body>
 <div class="container">

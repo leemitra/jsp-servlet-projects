@@ -7,6 +7,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Query;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -163,12 +166,18 @@ int id = Integer.parseInt(request.getParameter("userId"));
 
 	private void registerAction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException  {
 		// TODO Auto-generated method stub
+		 EntityManagerFactory emf = (EntityManagerFactory) getServletContext().getAttribute("emf");
+		 EntityManager manager= emf.createEntityManager();
 		
 		String operation = request.getParameter("option");
 		UserDetails user=(UserDetails) request.getAttribute("userData");
 		System.out.println(user.getFullName() +" user full name and email : "+user.getEmail());
 		try {
-			Connection con = DbConnection.getConnection();
+			manager.getTransaction().begin();
+			manager.persist(user);
+			manager.getTransaction().commit();
+			
+			/*Connection con = DbConnection.getConnection();
 			Statement st = con.createStatement();
 			//ResultSet rs= st.executeQuery("select *from user_login where user_name='"+username+"' and user_pass='"+password+"'");
 			String query="insert into user_login (user_name,user_pass,full_name,email, phone) "
@@ -178,12 +187,17 @@ int id = Integer.parseInt(request.getParameter("userId"));
 				response.getWriter().append("User added successfully...");
 			}else {
 				response.getWriter().append("Failed to add user...");
-			}
+			}*/
+			System.out.println("User registered successfully...");
 			request.getRequestDispatcher("index.jsp").forward(request, response);
 			
 		}catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+		}finally {
+			if(manager.getTransaction().isActive())
+				manager.getTransaction().rollback();
+			manager.close();
 		}
 		
 	}
@@ -201,30 +215,37 @@ int id = Integer.parseInt(request.getParameter("userId"));
 	private void loginAction(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		UserDetails user= (UserDetails)request.getAttribute("loginUser");
 		System.out.println("user name : "+user.getUsername() +"  and password : " +user.getPassword());
-		try {
-	
-			Connection con = DbConnection.getConnection();
-			Statement st = con.createStatement();
-			ResultSet rs= st.executeQuery("select *from user_login where user_name='"+user.getUsername()+"' and user_pass='"+user.getPassword()+"'");
+		 EntityManagerFactory emf = (EntityManagerFactory) getServletContext().getAttribute("emf");
+		 EntityManager manager= emf.createEntityManager();
 		
-			if(rs.next()) {
-				
+		try {
+			Query query= manager.createQuery("select a from UserDetails a where username=:u and password=:p");
+			query.setParameter("u", user.getUsername());
+			query.setParameter("p", user.getPassword());
+			UserDetails dbuser = (UserDetails)query.getSingleResult();
+			
+			 
+			if(dbuser.getUsername()!=null) {	
 			 HttpSession session = request.getSession();
 			 UserService service = new UserService();
 			 List<UserDetails> list = service.getAllUsers();
-				String uid= rs.getString("user_name");
-				String pass=rs.getString("user_pass");
-			session.setAttribute("userid", uid);
-				System.out.println("DB username : "+uid +" and pass : "+pass) ;
+				//String uid= rs.getString("user_name");
+				//String pass=rs.getString("user_pass");
+			session.setAttribute("userid", dbuser.getUsername());
+				System.out.println("DB username : "+dbuser.getUsername() +" and pass : "+dbuser.getPassword()) ;
 				session.setAttribute("list", list);
 				response.sendRedirect("home.jsp");
 			}else {
 				response.sendRedirect("index.jsp");
 			}
 				
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
+		}finally {
+			if(manager.getTransaction().isActive())
+				manager.getTransaction().rollback();
+			manager.close();
 		}
 		
 	}

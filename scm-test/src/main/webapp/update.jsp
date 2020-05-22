@@ -7,7 +7,10 @@
 <meta charset="ISO-8859-1">
 <title>update user</title>
 
-<link rel="stylesheet" type="text/css" href="css/style.css" />
+<!-- <link rel="stylesheet" type="text/css" href="css/style.css" /> -->
+<style type="text/css">
+	<%@include file="../css/style.css"  %>
+</style>
 </head>
 <body>
 <div class="container">
