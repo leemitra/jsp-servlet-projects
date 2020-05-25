@@ -4,6 +4,8 @@ import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @javax.persistence.Entity
@@ -24,6 +26,10 @@ public class UserDetails {
 	private String email;
 	@Column(name="phone", length=15)
 	private String phone ;
+	
+	@ManyToOne
+	@JoinColumn(name="role_id")
+	private UserRoles role;
 	
 	public String getFullName() {
 		return fullName;
@@ -55,16 +61,23 @@ public class UserDetails {
 	public void setPhone(String phone) {
 		this.phone = phone;
 	}
-	@Override
-	public String toString() {
-		return "UserDetails [fullName=" + fullName + ", username=" + username + ", password=" + password + ", email="
-				+ email + ", phone=" + phone + "]";
-	}
+	
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
+	}
+	public UserRoles getRole() {
+		return role;
+	}
+	public void setRole(UserRoles role) {
+		this.role = role;
+	}
+	@Override
+	public String toString() {
+		return "UserDetails [id=" + id + ", fullName=" + fullName + ", username=" + username + ", password=" + password
+				+ ", email=" + email + ", phone=" + phone + ", role=" + role + "]";
 	}
 	
 	
