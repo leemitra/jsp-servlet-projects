@@ -14,7 +14,7 @@
 
 </head>
 <body>
-<div class="container">
+<div class="container"><h2>Library Management</h2>
 <%
 String userid = (String)session.getAttribute("userid");
 if(userid == null){

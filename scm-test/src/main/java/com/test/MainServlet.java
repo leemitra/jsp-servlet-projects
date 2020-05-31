@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.test.entity.BookDetails;
 import com.test.entity.UserDetails;
 
 /**
@@ -83,10 +84,45 @@ public class MainServlet extends HttpServlet {
 		case "/updateUser":
 			updateUsersData(request, response);
 			break;
+
+		case "/addBooks":
+			addBooks(request, response);
+			break;
+
+		case "/updateBooks":
+			updateBooks(request, response);
+			break;
+			
 		default:
 			break;
 		}
 
+	}
+
+	private void updateBooks(HttpServletRequest request, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void addBooks(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
+		EntityManagerFactory emf = (EntityManagerFactory) getServletContext().getAttribute("emf");
+		EntityManager manager = emf.createEntityManager();
+		BookDetails book = (BookDetails) request.getAttribute("book");
+		System.out.println(book.toString());
+		try {
+			manager.getTransaction().begin();
+			book.setStatus("NEW");
+			manager.persist(book);
+			manager.getTransaction().commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (manager.getTransaction().isActive())
+				manager.getTransaction().rollback();
+			manager.close();
+		}
+		
+		request.getRequestDispatcher("admin.jsp").forward(request, response);
 	}
 
 	private void updateUsersData(HttpServletRequest request, HttpServletResponse response)
@@ -94,24 +130,15 @@ public class MainServlet extends HttpServlet {
 		// TODO Auto-generated method stub
 		int id = Integer.parseInt(request.getParameter("userid"));
 		System.out.println("request user to update " + id);
+		EntityManagerFactory emf = (EntityManagerFactory) getServletContext().getAttribute("emf");
+		EntityManager manager = emf.createEntityManager();
+		
 		try {
-
-			Connection con = DbConnection.getConnection();
-			Statement st = con.createStatement();
-			ResultSet rs = st.executeQuery("select *from user_login where id='" + id + "'");
-
-			if (rs.next()) {
-
-				UserDetails user = new UserDetails();
-				user.setEmail(rs.getString("email"));
-				user.setPhone(rs.getString("phone"));
-				user.setFullName(rs.getString("full_name"));
-				user.setPassword(rs.getString("user_pass"));
-				user.setUsername(rs.getString("user_name"));
-				user.setId(id);
-				request.setAttribute("user", user);
-			}
-		} catch (SQLException e) {
+			manager.getTransaction().begin();
+			UserDetails user = (UserDetails)manager.find(UserDetails.class, id);
+			manager.getTransaction().commit();
+			request.setAttribute("user", user);
+		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}

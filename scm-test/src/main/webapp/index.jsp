@@ -13,7 +13,7 @@
 </head>
 <body>
 <div class="container">
-<h2 style="text-align: center;" >Hello World!</h2>
+<h2 style="text-align: center;" >Library Management</h2>
 <form action="login.jsp" method="post">
 <div class="row" > 
 <div class="col">
