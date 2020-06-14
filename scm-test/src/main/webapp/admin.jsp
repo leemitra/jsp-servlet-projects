@@ -24,7 +24,7 @@ if(userid == null){
 }
 %>
 <h2>Welcome <%=userid%> to Admin home page</h2>
-<p> <a href="#">Add Books</a>&nbsp;   <a href="logout"> logout</a> </p>
+<p> <a href="#">Add Books</a>&nbsp; <a href="viewBooks">View Books</a>&nbsp;   <a href="logout"> logout</a> </p>
 <div style="margin-left: 50mm;" class="">
 <form action="addbooksAction.jsp" method="post">
 <table>
@@ -33,7 +33,7 @@ if(userid == null){
 	<tr><td>Price: </td><td><input type="text" name="bookPrice"> </td></tr>
 	<tr><td>ISBN  Number:</td><td><input type="text" name="bookNumber"> </td></tr>
 	<tr><td>Edition:</td><td><input type="text" name="edition"> </td></tr>
-	<tr><td>Purchase Date:</td><td><input type="date" name="purchageDate"> </td></tr>
+	<tr><td>Purchase Date:</td><td><input type="date" name="purchageDate1"> </td></tr>
 	<tr><td>Number of Copies:</td><td><input type="text" name="numberOfCopies"> </td></tr>
 	<tr><td></td><td><input type="submit" value="Submit"> </td></tr>
 </table>

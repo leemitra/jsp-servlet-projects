@@ -1,8 +1,6 @@
 package com.test.entity;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -11,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="book_details")
@@ -33,7 +33,8 @@ public class BookDetails {
 	@Column(name="edition", length =20)
 	private String edition;
 	@Column(name="date_purchage", length =40)
-	private Date purchageDate;
+	@Temporal(TemporalType.DATE)
+	private Calendar purchageDate;
 	@Column(name="number_copies", length =10)
 	private int numberOfCopies;
 	
@@ -79,12 +80,12 @@ public class BookDetails {
 	public void setEdition(String edition) {
 		this.edition = edition;
 	}
-	public Date getPurchageDate() {
+	 
+	public Calendar getPurchageDate() {
 		return purchageDate;
 	}
-	public void setPurchageDate(Date purchageDate) {
-		 
-		this.purchageDate= purchageDate;
+	public void setPurchageDate(Calendar purchageDate) {
+		this.purchageDate = purchageDate;
 	}
 	public int getNumberOfCopies() {
 		return numberOfCopies;

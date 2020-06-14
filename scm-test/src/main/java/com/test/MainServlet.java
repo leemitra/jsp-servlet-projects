@@ -89,8 +89,18 @@ public class MainServlet extends HttpServlet {
 			addBooks(request, response);
 			break;
 
-		case "/updateBooks":
+		case "/updateBook":
 			updateBooks(request, response);
+			break;
+			
+		case "/viewBooks":
+			viewBooks(request, response);
+			break;
+		case "/deleteBook":
+			deleteBook(request, response);
+			break;	
+		case "/updateBookDetail":
+			updateBookDetail(request, response);
 			break;
 			
 		default:
@@ -99,10 +109,95 @@ public class MainServlet extends HttpServlet {
 
 	}
 
-	private void updateBooks(HttpServletRequest request, HttpServletResponse response) {
-		// TODO Auto-generated method stub
+	private void updateBookDetail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		EntityManagerFactory emf = (EntityManagerFactory) getServletContext().getAttribute("emf");
+		EntityManager manager = emf.createEntityManager();
+		try {
+			BookDetails book = (BookDetails) request.getAttribute("book");
+			manager.getTransaction().begin();
+			BookDetails bk= manager.find(BookDetails.class, book.getBookId());
+			bk.setBookPrice(book.getBookPrice());
+			bk.setBookName(book.getBookName());
+			bk.setBookAuthor(book.getBookAuthor());
+			bk.setNumberOfCopies(book.getNumberOfCopies());
+			manager.merge(bk);
+			List<BookDetails> list=manager.createQuery("select a from BookDetails a", BookDetails.class).getResultList();
+			manager.getTransaction().commit();
+			request.setAttribute("books", list);
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}finally {
+			if (manager.getTransaction().isActive())
+				manager.getTransaction().rollback();
+			manager.close();
+		}
+		request.getRequestDispatcher("viewBooks.jsp").forward(request, response);
 		
 	}
+
+	private void deleteBook(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		EntityManagerFactory emf = (EntityManagerFactory) getServletContext().getAttribute("emf");
+		EntityManager manager = emf.createEntityManager();
+		try {
+			int id =Integer.parseInt(request.getParameter("bookid"));
+			manager.getTransaction().begin();
+			BookDetails book = manager.find(BookDetails.class, id);
+			manager.remove(book);
+			List<BookDetails> list=manager.createQuery("select a from BookDetails a", BookDetails.class).getResultList();
+			manager.getTransaction().commit();
+			request.setAttribute("books", list);
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}finally {
+			if (manager.getTransaction().isActive())
+				manager.getTransaction().rollback();
+			manager.close();
+		}
+		request.getRequestDispatcher("viewBooks.jsp").forward(request, response);
+		
+	}
+	private void updateBooks(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		EntityManagerFactory emf = (EntityManagerFactory) getServletContext().getAttribute("emf");
+		EntityManager manager = emf.createEntityManager();
+		try {
+			int id =Integer.parseInt(request.getParameter("bookid"));
+			manager.getTransaction().begin();
+			BookDetails book = manager.find(BookDetails.class, id);
+			request.setAttribute("book", book);
+			manager.getTransaction().commit();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}finally {
+			if (manager.getTransaction().isActive())
+				manager.getTransaction().rollback();
+			manager.close();
+		}
+		request.getRequestDispatcher("updateBook.jsp").forward(request, response);
+	}
+
+	private void viewBooks(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		EntityManagerFactory emf = (EntityManagerFactory) getServletContext().getAttribute("emf");
+		EntityManager manager = emf.createEntityManager();
+		try {
+			manager.getTransaction().begin();
+			List<BookDetails> list=manager.createQuery("select a from BookDetails a", BookDetails.class).getResultList();
+			manager.getTransaction().commit();
+			request.setAttribute("books", list);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			if (manager.getTransaction().isActive())
+				manager.getTransaction().rollback();
+			manager.close();
+		}
+		request.getRequestDispatcher("viewBooks.jsp").forward(request, response);
+		
+	}
+
+	
 
 	private void addBooks(HttpServletRequest request, HttpServletResponse response)throws ServletException, IOException {
 		EntityManagerFactory emf = (EntityManagerFactory) getServletContext().getAttribute("emf");
