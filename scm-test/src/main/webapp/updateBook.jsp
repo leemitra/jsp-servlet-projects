@@ -8,11 +8,11 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>home</title>
-<style type="text/css">
+<%-- <style type="text/css">
 <%@include file="../css/style.css" %>
 
-</style>
-
+</style> --%>
+    <link href="css/style.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">

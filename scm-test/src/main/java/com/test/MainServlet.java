@@ -1,10 +1,6 @@
 package com.test;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -59,7 +55,7 @@ public class MainServlet extends HttpServlet {
 	protected void doProcess(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+	//	response.getWriter().append("Served at: ").append(request.getContextPath());
 
 		String url = request.getServletPath();
 		System.out.println(url + " request servlet path ");
@@ -120,6 +116,7 @@ public class MainServlet extends HttpServlet {
 			bk.setBookName(book.getBookName());
 			bk.setBookAuthor(book.getBookAuthor());
 			bk.setNumberOfCopies(book.getNumberOfCopies());
+			bk.setEdition(book.getEdition());
 			manager.merge(bk);
 			List<BookDetails> list=manager.createQuery("select a from BookDetails a", BookDetails.class).getResultList();
 			manager.getTransaction().commit();
@@ -139,6 +136,7 @@ public class MainServlet extends HttpServlet {
 	private void deleteBook(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		EntityManagerFactory emf = (EntityManagerFactory) getServletContext().getAttribute("emf");
 		EntityManager manager = emf.createEntityManager();
+	
 		try {
 			int id =Integer.parseInt(request.getParameter("bookid"));
 			manager.getTransaction().begin();
@@ -208,6 +206,8 @@ public class MainServlet extends HttpServlet {
 			manager.getTransaction().begin();
 			book.setStatus("NEW");
 			manager.persist(book);
+			List<BookDetails> listb=manager.createQuery("select a from BookDetails a", BookDetails.class).getResultList();
+			request.setAttribute("books", listb);
 			manager.getTransaction().commit();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -352,8 +352,9 @@ public class MainServlet extends HttpServlet {
 		UserDetails user = (UserDetails) request.getAttribute("loginUser");
 		EntityManagerFactory emf = (EntityManagerFactory) getServletContext().getAttribute("emf");
 		EntityManager manager = emf.createEntityManager();
-
+		String view="";
 		try {
+			manager.getTransaction().begin();
 			Query query = manager.createQuery("select a from UserDetails a where username=:u and password=:p");
 			query.setParameter("u", user.getUsername());
 			query.setParameter("p", user.getPassword());
@@ -361,24 +362,21 @@ public class MainServlet extends HttpServlet {
 
 			if (dbuser.getUsername() != null) {
 				HttpSession session = request.getSession();
-				UserService service = new UserService();
-				System.out.println(dbuser.toString());
-				List<UserDetails> list = service.getAllUsers();
-				
-				String view="";
+				List<BookDetails> listb=manager.createQuery("select a from BookDetails a", BookDetails.class).getResultList();
+				request.setAttribute("books", listb);
 				if(dbuser.getRole().getRole().equals("ADMIN")) {
+					List<UserDetails> list = manager.createQuery("select a from UserDetails a", UserDetails.class).getResultList();
 					view="admin.jsp";
+					session.setAttribute("list", list);
 				}else if (dbuser.getRole().getRole().equals("USER")) {
 					view="home.jsp";
 				}
 				session.setAttribute("userid", dbuser.getUsername());
-				System.out.println("DB username : " + dbuser.getUsername() + " and pass : " + dbuser.getPassword());
-				session.setAttribute("list", list);
-				response.sendRedirect(view);
+				//response.sendRedirect(view);
 			} else {
-				response.sendRedirect("index.jsp");
+				view="index.jsp";
 			}
-
+			manager.getTransaction().commit();
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
@@ -387,7 +385,7 @@ public class MainServlet extends HttpServlet {
 				manager.getTransaction().rollback();
 			manager.close();
 		}
-
+		request.getRequestDispatcher(view).forward(request, response);
 	}
 
 }

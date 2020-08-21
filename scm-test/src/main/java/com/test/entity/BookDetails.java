@@ -26,7 +26,7 @@ public class BookDetails {
 	private String bookName;
 	@Column(name="book_price", length =10)
 	private Double bookPrice;
-	@Column(name="place_number", length =40)
+	@Column(name="book_isbn_number", length =40)
 	private String bookNumber;
 	@Column(name="status", length =20)
 	private String status;

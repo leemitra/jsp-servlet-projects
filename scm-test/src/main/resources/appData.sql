@@ -3,3 +3,8 @@ insert into user_role(id,role_name, role_description) values (2,'USER', 'User ro
 insert into user_login (user_name, user_pass, email, phone, full_name,role_id) values ('admin','admin', 'admin@gmail.com ', '99009090900','Admin',1);
 insert into user_login (user_name, user_pass, email, phone, full_name,role_id) values ('ajay','12345', 'ajay@gmail.com ', '9988998765','Ajay',2);
 insert into user_login (user_name, user_pass, email, phone, full_name,role_id) values ('john','123456', 'john@gmail.com ', '9900998778','John',2);
+insert into book_details (book_author, book_name, book_isbn_number, book_price, edition, number_copies, date_purchage, status) values ('Cay S. Horstmann', 'Core Java Fundamentals', '98976366733', 550, '11th Edition', 7, CURDATE(), 'NEW');
+insert into book_details (book_author, book_name, book_isbn_number, book_price, edition, number_copies, date_purchage, status) values ('Joshua Bloch', 'Effective Java', '989745454545', 550, '3rd Edition', 16, CURDATE(), 'NEW');
+insert into book_details (book_author, book_name, book_isbn_number, book_price, edition, number_copies, date_purchage, status) values ('Lasse Koskela', 'TDD Java Developers', '989776764533', 550, '1st Edition', 9, CURDATE(), 'NEW');
+insert into book_details (book_author, book_name, book_isbn_number, book_price, edition, number_copies, date_purchage, status) values ('Anthony Molinaro', 'Programming Algorithms', '9434334323232', 550, '5th Edition', 4, CURDATE(), 'NEW');
+insert into book_details (book_author, book_name, book_isbn_number, book_price, edition, number_copies, date_purchage, status) values ('Chris Fehily', 'SQL Programming', '9834433343434', 550, '4th Edition', 5, CURDATE(), 'NEW');
