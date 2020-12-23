@@ -1,3 +1,4 @@
+ 
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app version="3.1"
 	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
@@ -16,3 +17,37 @@
 
 
 	</web-app> -->
+ 
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+  <display-name>Archetype Created Web Application</display-name>
+ <!--  <listener>
+  	<listener-class>com.test.AppListner</listener-class>
+  </listener>
+  <servlet>
+  	<servlet-name>UserListServlet</servlet-name>
+  	<display-name>UserListServlet</display-name>
+  	<description></description>
+  	<servlet-class>com.test.UserListServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>UserListServlet</servlet-name>
+  	<url-pattern>/UserListServlet</url-pattern>
+  </servlet-mapping>
+  <filter>
+  	<filter-name>AppFilter</filter-name>
+  	<display-name>AppFilter</display-name>
+  	<description></description>
+  	<filter-class>com.test.AppFilter</filter-class>
+  </filter>
+  <filter-mapping>
+  	<filter-name>AppFilter</filter-name>
+  	<url-pattern>/AppFilter</url-pattern>
+  </filter-mapping>
+  -->
+
+</web-app>
+ 

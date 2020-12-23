@@ -31,6 +31,15 @@ public class UserDetails {
 	@JoinColumn(name="role_id")
 	private UserRoles role;
 	
+
+public class UserDetails {
+
+	private int id;
+	private String fullName;
+	private String username;
+	private String password;
+	private String email;
+	private String phone ;
 	public String getFullName() {
 		return fullName;
 	}
@@ -62,12 +71,19 @@ public class UserDetails {
 		this.phone = phone;
 	}
 	
+
+	@Override
+	public String toString() {
+		return "UserDetails [fullName=" + fullName + ", username=" + username + ", password=" + password + ", email="
+				+ email + ", phone=" + phone + "]";
+	}
 	public int getId() {
 		return id;
 	}
 	public void setId(int id) {
 		this.id = id;
 	}
+
 	public UserRoles getRole() {
 		return role;
 	}
@@ -79,6 +95,8 @@ public class UserDetails {
 		return "UserDetails [id=" + id + ", fullName=" + fullName + ", username=" + username + ", password=" + password
 				+ ", email=" + email + ", phone=" + phone + ", role=" + role + "]";
 	}
+
+
 	
 	
 	

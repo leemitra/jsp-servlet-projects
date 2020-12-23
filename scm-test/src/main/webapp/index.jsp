@@ -1,11 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+ <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>
+ 
+ <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
 <title>Login</title>
-<style type="text/css">
+ <style type="text/css">
 <%@include file="../css/style.css" %>
 
 </style>
@@ -14,7 +15,14 @@
 <body>
 <div class="container">
 <h2 style="text-align: center;" >Library Management</h2>
-<form action="login.jsp" method="post">
+ 
+
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+</head>
+<body>
+<div class="container">
+<h2 style="text-align: center;" >Hello World!</h2>
+ <form action="login.jsp" method="post">
 <div class="row" > 
 <div class="col">
 <!-- left part -->

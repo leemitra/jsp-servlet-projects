@@ -1,5 +1,6 @@
 package com.test;
 
+
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import javax.servlet.ServletContextEvent;
@@ -23,6 +24,7 @@ public class AppListner implements ServletContextListener {
     	System.out.println("Listner destroy method");
     	EntityManagerFactory emf= (EntityManagerFactory) sce.getServletContext().getAttribute("emf");
     	emf.close();
+
     }
 
 	/**
@@ -33,6 +35,7 @@ public class AppListner implements ServletContextListener {
     	System.out.println("Listner init method");
     	EntityManagerFactory emf= Persistence.createEntityManagerFactory("scmTest");
     	sce.getServletContext().setAttribute("emf", emf);
+
     }
 	
 }
