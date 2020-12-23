@@ -5,9 +5,15 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Register</title>
+ <style type="text/css">
+<%@include file="../css/style.css" %>
+
+</style>
+
+ 
 
 <link rel="stylesheet" type="text/css" href="css/style.css" />
-</head>
+ </head>
 <body>
 
 <div class="container">

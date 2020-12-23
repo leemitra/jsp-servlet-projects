@@ -27,6 +27,7 @@ public class UserService {
 				user.setPhone(rs.getString("phone"));
 				user.setId(rs.getInt("id"));
 				user.setPassword(rs.getString("user_pass"));
+				user.setUsername(rs.getString("user_name"));
 				users.add(user);
 			}
 		} catch (SQLException e) {
